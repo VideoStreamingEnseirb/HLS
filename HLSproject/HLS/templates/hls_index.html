@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -27,27 +27,26 @@
       </div>
       <div class="card-body">
         <h3 class="card-title">HTTP Live Streaming</h3>
-        <br>
-        <h5><a href="https://developer.apple.com/streaming/">The Official	Website of HLS</a></h5>
-        <br>
+
         <p class="alinea">
           In the 2000s the majority of the Internet traffic was HTTP-based.
-            Video streaming is partly the root cause of its growth, since it has gained more and more shares of the Internet traffic and might reach 80% of the traffic before 2022.
+          Video streaming is partly the root cause of its growth, since it has gained more and more shares of the Internet traffic and might reach 80% of the traffic before 2022.
         </p>
         <p class="alinea">
           Protocols were developed to diffuse, standardize and facilitate the video traffic on Internet.
-           Originally, most of video protocols were proprietary and UDP-based.
-           Nevertheless, in 2007, technologies using HTTP-based adaptive streaming were elaborated.
-           One of the most popular protocols is Http Live Streaming (HLS) developed by Apple Inc since may 2009. The latter is an adaptive bitrate streaming protocol for video.
-           Adaptive bitrate is the ability
+          Originally, most of video protocols were proprietary and UDP-based.
+          Nevertheless, in 2007, technologies using HTTP-based adaptive streaming were elaborated.
+          One of the most popular protocols is Http Live Streaming (HLS) developed by Apple Inc since may 2009. The latter is an adaptive bitrate streaming protocol for video.
+          Adaptive bitrate is the ability
           to
-           adjust the quality of the video stream in near real-time according the network quality and CPU capacity available on the client side. This feature is detailed thereafter.
+          adjust the quality of the video stream in near real-time according the network quality and CPU capacity available on the client side. This feature is detailed thereafter.
+          You can find more information on <a href="https://developer.apple.com/streaming/"> official	HLS website</a>.
         </p>
         <br>
         <h4>Protocol stack</h4>
         <p class="alinea">
           HLS is an HTTP-based protocol. It works on TCP/IP protocols like all HTTP traffic (Figure 1). HLS is an Over-the-top solution working on the already existing and vastly
-               deployed, the HTTP protocol. That makes HLS straightforward to implement and set up.
+          deployed, the HTTP protocol. That makes HLS straightforward to implement and set up.
         </p>
 
         <p>
@@ -110,11 +109,11 @@
         <p class="alinea">
           HLS protocol was defined as an adaptative bitrate protocol. The Figure 4 is the perfect example of how HLS adaptative bitrate works.
           First, the client has a low Internet connection, therefore he downloads poor quality segments. Afterwards, the client bandwidth improves so as the video quality enhances from low to high. Finally, the video quality deteriorates because the bandwidth decreases.
-</p>
-<br>
-<h4>Advantages & Downsides</h4>
-<br>
-<p>
+        </p>
+        <br>
+        <h4>Advantages & Downsides</h4>
+        <br>
+        <p>
           HLS is an HTTP-based protocol with a lot of advantages:
           <br>
 
@@ -126,48 +125,138 @@
             <li>Widely supported by all client software (Android, Google Chrome, Safari, Linux, iOs, MacOS, Microsoft, ...)</li>
 
           </ul>
+          <br>
+          But using HLS could lead to some limitations:
+          <br>
+          <br>
+          <ul>
+            <li>The latency due to the keyframe intervals, packet size and playback buffer requirement (minimum of 20 seconds of latency). </li>
+            <li>HLS only supports playing streams</li>
+          </ul>
+        </p>
         <br>
-        But using HLS could lead to some limitations:
+        <h4>Use Cases</h4>
         <br>
+        <p class="alinea">
+          Some big streaming platforms are using this protocol for their video live streams or their replay. For instance, Twitch, the first video games streaming
+          platform in the world makes use of HLS. HLS is also used by Canal + or Dailymotion. Moreover, Apple has developed an enhanced version of HLS : HLS Low Latency,
+          reaching a latency lesser than 2 seconds.
+        </p>
         <br>
-        <ul>
-          <li>The latency due to the keyframe intervals, packet size and playback buffer requirement (minimum of 20 seconds of latency). </li>
-          <li>HLS only supports playing streams</li>
-        </ul>
-      </p>
-      <br>
-      <h4>Use Cases</h4>
-      <br>
-      <p>
-        Some big streaming platforms are using this protocol for their video live streams or their replay. For instance, Twitch, the first video games streaming
-        platform in the world makes use of HLS. HLS is also used by Canal + or Dailymotion. Moreover, Apple has developed an enhanced version of HLS : HLS Low Latency,
-        reaching a latency lesser than 2 seconds.
-      </p>
-      <br>
+      </div>
     </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      <h2> Demonstration </h2>
-    </div>
-    <div class="card-body">
-      <h3> VOD </h3>
-      <br>
-      <center>
-        <video style="max-width:100%; max-height:100%" id=example-video  class="video-js vjs-default" controls>
-          <source
-          src="http://127.0.0.1/static/video/vid/playlist.m3u8"
-          type="application/x-mpegURL">
-        </video>
-      </center>
+    <div class="card">
+      <div class="card-header">
+        <h2> Demonstration </h2>
+      </div>
+      <div class="card-body">
+        <h3> VOD </h3>
+        <br>
+        <center>
+        <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+        <style>
+        button.enabled {
+          background: SkyBlue;
+        }
+        button.selected {
+          background: SpringGreen;
+        }
+        button.disabled {
+          background: red;
+        }
+      </style>
+
+      <div id="fixture">
+      </div>
+      <div id="quality-levels">
+        <h2>Quality Levels:</h2>
+      </div>
+
       <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
       <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
-
+      <script src="http://127.0.0.1/static/js/videojs-contrib-quality-levels.js"></script>
       <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
       <script>
-      var player = videojs('example-video');
-      player.play();
+      function createQualityButton(qualityLevel, parent) {
+        var button = document.createElement('button');
+        var classes = button.classList;
+
+        if (qualityLevel.enabled) {
+          classes.add('enabled');
+        } else {
+          classes.add('disabled');
+        }
+
+        button.innerHTML = qualityLevel.id + ': ' + qualityLevel.bitrate + ' kbps';
+        button.id = 'quality-level-' + qualityLevel.id;
+
+        button.onclick = function() {
+          var old = qualityLevel.enabled;
+          qualityLevel.enabled = !old;
+          button.classList.toggle('enabled');
+          button.classList.toggle('disabled');
+        }
+        parent.appendChild(button);
+      }
+
+      function createPlayer(callback) {
+        var video = document.createElement('video');
+        video.id = 'videojs-contrib-quality-levels-player';
+        video.className = 'video-js vjs-default-skin';
+        video.setAttribute('controls', true);
+        video.setAttribute('height', 300);
+        video.setAttribute('width', 600);
+        document.querySelector('#fixture').appendChild(video);
+
+        var options = {
+          autoplay: false,
+          qualityLevels: {}
+        };
+        var url = 'http://127.0.0.1/static/video/vid/playlist.m3u8';
+        var type = 'application/x-mpegURL';
+
+        try {
+          window.player = videojs(video.id, options);
+
+          window.player.src({
+            src: url,
+            type: type
+          });
+
+          callback(window.player);
+        } catch(err) {
+          console.log("caught an error trying to create and add src to player:", err);
+        }
+      }
+      function setup(player) {
+        player.ready(function() {
+          var qualityLevels = player.qualityLevels();
+          var container = document.getElementById('quality-levels');
+
+          qualityLevels.on('addqualitylevel', function(event) {
+            createQualityButton(event.qualityLevel, container);
+          });
+
+          qualityLevels.on('change', function(event) {
+            for (var i = 0; i < qualityLevels.length; i++) {
+              var level = qualityLevels[i];
+              var button = document.getElementById('quality-level-' + level.id);
+
+              button.classList.remove('selected');
+            }
+
+            var selected = qualityLevels[event.selectedIndex];
+            var button = document.getElementById('quality-level-' + selected.id);
+            button.classList.add('selected');
+          })
+        });
+      }
+
+      (function(window, videojs) {
+        createPlayer(setup);
+      })(window, window.videojs);
       </script>
+    </center>
       <br>
       <p>
         To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks(.ts files) that are downloaded and the different qualities of these chunks.
@@ -189,7 +278,6 @@
         </center>
         <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
         <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
-
         <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
         <script>
         var player2 = videojs('example-video2');
@@ -206,9 +294,9 @@
     </div>
     <div class="card-body">
       <br>
-      <p>
+      <p class="alinea">
         This document aims to deploy a website. The purpose of the website is to host the description of the protocol Http Live Streaming (HLS).
-         Besides, the website implements this protocol and a demonstration of a video received thanks to the HLS protocol.
+        Besides, the website implements this protocol and a demonstration of a video received thanks to the HLS protocol.
         In the rest of the document, all lines starting with “$” mean that the lines need to be written in a terminal.
       </p>
       <br>
@@ -293,7 +381,7 @@
         <br>
         <p>
           If you have follow this HowTo step by step, everything should be working. You can know go to the <i>http://127.0.0.1/HLS</i>.
-<br>
+          <br>
           To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks (.ts files) that are downloaded and the different qualities of these chunks.
         </p>
         <br>
