@@ -7,6 +7,8 @@ img {
   margin-left: auto;
   margin-right: auto;
 }
+
+
 .container{
     margin-top: 100px;
     width: 75%;
@@ -14,10 +16,21 @@ img {
     border-radius: 5px;
 }
 .card{
-    margin-top: 10px;
-    margin-bottom:10px;
+    margin-top: 5%;
+    margin-bottom:5%;
 }
 .responsive {
     max-width: 100%;
     height: auto;
-  }
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.card-title{
+  margin: auto;
+  text-align: center;
+}
+
+.alinea{
+  text-indent:3%;
+}

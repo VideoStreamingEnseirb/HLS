@@ -4,7 +4,7 @@
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="telecom/static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
 
   <title>Video Streamings Protocol</title>
 </head>
@@ -26,48 +26,51 @@
         <h2> Protocol Presentation </h2>
       </div>
       <div class="card-body">
-        <h3 class="card-title">HLS</h3>
+        <h3 class="card-title">HTTP Live Streaming</h3>
         <br>
         <h5><a href="https://developer.apple.com/streaming/">The Official	Website of HLS</a></h5>
         <br>
-        <p style="text-indent:4%;">
+        <p class="alinea">
           In the 2000s the majority of the Internet traffic was HTTP-based.
             Video streaming is partly the root cause of its growth, since it has gained more and more shares of the Internet traffic and might reach 80% of the traffic before 2022.
         </p>
-        <p style="text-indent:4%;">
+        <p class="alinea">
           Protocols were developed to diffuse, standardize and facilitate the video traffic on Internet.
            Originally, most of video protocols were proprietary and UDP-based.
            Nevertheless, in 2007, technologies using HTTP-based adaptive streaming were elaborated.
-           One of the most popular protocols is Http Live Streaming (HLS
-          ) developed by Apple Inc since may 2009. The latter is an adaptive bitrate streaming protocol for video.
+           One of the most popular protocols is Http Live Streaming (HLS) developed by Apple Inc since may 2009. The latter is an adaptive bitrate streaming protocol for video.
            Adaptive bitrate is the ability
           to
            adjust the quality of the video stream in near real-time according the network quality and CPU capacity available on the client side. This feature is detailed thereafter.
         </p>
         <br>
         <h4>Protocol stack</h4>
-        <p>
-          HLS is an hhtp-based protocol. It works on TCP/IP protocols. <br>
+        <p class="alinea">
+          HLS is an HTTP-based protocol. It works on TCP/IP protocols as all HTTP traffic. HLS is an Over-the-top solution working on the already existing and vastly
+               deployed, the HTTP protocol. That makes HLS straightforward to implement and set up.
         </p>
-        <br>
+
         <p>
           <center>
-            <img alt="Nature" class="responsive" src="http://127.0.0.1/telecom/static/img/ProtocolStack.png" >
+            <img alt="HLS protocol stack" class="responsive" src="http://127.0.0.1/telecom/static/img/ProtocolStack.png" >
+            <figcaption>Figure 1 : HLS protocol stack</figcaption>
           </center>
         </p>
         <br>
-        <h4>General Fonctionment</h4>
+        <h4>Http Live Streaming Overview</h4>
         <br>
+        <h5>HLS : Manifest</h5>
         <center>
           <p>
             <img  width=60%  src="http://127.0.0.1/telecom/static/img/Server.png" >
           </p>
         </center>
         <br>
-        <p>
+        <p class="alinea">
           First of all in the server, the input video is encoded in MPEG-2 TS file. Then the video is segmented into different files (.ts) of equal length (8 seconds) in different bitrate versions. An index file (.m3u8) called manifest is also created in order to reference the fragmented files.
           The manifest file allows the client to know what video streams (different qualities) and segments are available at a given time. By means of this protocol,, it is possible for the user to switch from one bitrate version to another.
         </p>
+        <h5>HLS : Clients-Server Protocol</h5>
         <br>
         <center>
           <p>
@@ -80,7 +83,9 @@
           The different segments can be located in various CDN (Content Delivery Network). CDN are groups of server that provide fast delivery internet content.
           Firstly, the client makes a request to the server and download the manifest file. Then, the device chooses automatically the appropriate stream in the manifest file by considering its network connection and its GPU capacities. Finally, the segment is downloaded and added in the playback buffer.
         </p>
+
         <br>
+        <h5>HLS : Adaptive Bitrate Protocol</h5>
         <center>
           <p>
             <img width=60%  src="http://127.0.0.1/telecom/static/img/Client.png" alt="">
