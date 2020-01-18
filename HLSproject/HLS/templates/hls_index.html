@@ -27,7 +27,9 @@
       </div>
       <div class="card-body">
         <h3 class="card-title">HTTP Live Streaming</h3>
-
+        <br>
+    <h5><a href="https://developer.apple.com/streaming/">HLS Official	Website</a></h5>
+    <br>
         <p class="alinea">
           In the 2000s the majority of the Internet traffic was HTTP-based.
           Video streaming is partly the root cause of its growth, since it has gained more and more shares of the Internet traffic and might reach 80% of the traffic before 2022.
@@ -153,242 +155,258 @@
         <h3> VOD </h3>
         <br>
         <center>
-        <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
-        <style>
-        button.enabled {
-          background: SkyBlue;
-        }
-        button.selected {
-          background: SpringGreen;
-        }
-        button.disabled {
-          background: red;
-        }
-      </style>
+          <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+          <style>
+          button.enabled {
+            background: SkyBlue;
+          }
+          button.selected {
+            background: SpringGreen;
+          }
+          button.disabled {
+            background: red;
+          }
+          </style>
 
-      <div id="fixture">
-      </div>
-      <div id="quality-levels">
-        <h2>Quality Levels:</h2>
-      </div>
+          <div id="fixture">
+          </div>
+          <div id="quality-levels">
+            <h2>Quality Levels:</h2>
+          </div>
 
-      <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
-      <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
-      <script src="http://127.0.0.1/static/js/videojs-contrib-quality-levels.js"></script>
-      <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
-      <script>
-      function createQualityButton(qualityLevel, parent) {
-        var button = document.createElement('button');
-        var classes = button.classList;
+          <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
+          <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+          <script src="http://127.0.0.1/static/js/videojs-contrib-quality-levels.js"></script>
+          <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
+          <script>
+          function createQualityButton(qualityLevel, parent) {
+            var button = document.createElement('button');
+            var classes = button.classList;
 
-        if (qualityLevel.enabled) {
-          classes.add('enabled');
-        } else {
-          classes.add('disabled');
-        }
-
-        button.innerHTML = qualityLevel.id + ': ' + qualityLevel.bitrate + ' kbps';
-        button.id = 'quality-level-' + qualityLevel.id;
-
-        button.onclick = function() {
-          var old = qualityLevel.enabled;
-          qualityLevel.enabled = !old;
-          button.classList.toggle('enabled');
-          button.classList.toggle('disabled');
-        }
-        parent.appendChild(button);
-      }
-
-      function createPlayer(callback) {
-        var video = document.createElement('video');
-        video.id = 'videojs-contrib-quality-levels-player';
-        video.className = 'video-js vjs-default-skin';
-        video.setAttribute('controls', true);
-        video.setAttribute('height', 300);
-        video.setAttribute('width', 600);
-        document.querySelector('#fixture').appendChild(video);
-
-        var options = {
-          autoplay: false,
-          qualityLevels: {}
-        };
-        var url = 'http://127.0.0.1/static/video/vid/playlist.m3u8';
-        var type = 'application/x-mpegURL';
-
-        try {
-          window.player = videojs(video.id, options);
-
-          window.player.src({
-            src: url,
-            type: type
-          });
-
-          callback(window.player);
-        } catch(err) {
-          console.log("caught an error trying to create and add src to player:", err);
-        }
-      }
-      function setup(player) {
-        player.ready(function() {
-          var qualityLevels = player.qualityLevels();
-          var container = document.getElementById('quality-levels');
-
-          qualityLevels.on('addqualitylevel', function(event) {
-            createQualityButton(event.qualityLevel, container);
-          });
-
-          qualityLevels.on('change', function(event) {
-            for (var i = 0; i < qualityLevels.length; i++) {
-              var level = qualityLevels[i];
-              var button = document.getElementById('quality-level-' + level.id);
-
-              button.classList.remove('selected');
+            if (qualityLevel.enabled) {
+              classes.add('enabled');
+            } else {
+              classes.add('disabled');
             }
 
-            var selected = qualityLevels[event.selectedIndex];
-            var button = document.getElementById('quality-level-' + selected.id);
-            button.classList.add('selected');
-          })
-        });
-      }
+            button.innerHTML = qualityLevel.id + ': ' + qualityLevel.bitrate + ' kbps';
+            button.id = 'quality-level-' + qualityLevel.id;
 
-      (function(window, videojs) {
-        createPlayer(setup);
-      })(window, window.videojs);
-      </script>
-    </center>
-      <br>
-      <p>
-        To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks(.ts files) that are downloaded and the different qualities of these chunks.
+            button.onclick = function() {
+              var old = qualityLevel.enabled;
+              qualityLevel.enabled = !old;
+              button.classList.toggle('enabled');
+              button.classList.toggle('disabled');
+            }
+            parent.appendChild(button);
+          }
+
+          function createPlayer(callback) {
+            var video = document.createElement('video');
+            video.id = 'videojs-contrib-quality-levels-player';
+            video.className = 'video-js vjs-default-skin';
+            video.setAttribute('controls', true);
+            video.setAttribute('height', 300);
+            video.setAttribute('width', 600);
+            document.querySelector('#fixture').appendChild(video);
+
+            var options = {
+              autoplay: false,
+              qualityLevels: {}
+            };
+            var url = 'http://127.0.0.1/static/video/vid/playlist.m3u8';
+            var type = 'application/x-mpegURL';
+
+            try {
+              window.player = videojs(video.id, options);
+
+              window.player.src({
+                src: url,
+                type: type
+              });
+
+              callback(window.player);
+            } catch(err) {
+              console.log("caught an error trying to create and add src to player:", err);
+            }
+          }
+          function setup(player) {
+            player.ready(function() {
+              var qualityLevels = player.qualityLevels();
+              var container = document.getElementById('quality-levels');
+
+              qualityLevels.on('addqualitylevel', function(event) {
+                createQualityButton(event.qualityLevel, container);
+              });
+
+              qualityLevels.on('change', function(event) {
+                for (var i = 0; i < qualityLevels.length; i++) {
+                  var level = qualityLevels[i];
+                  var button = document.getElementById('quality-level-' + level.id);
+
+                  button.classList.remove('selected');
+                }
+
+                var selected = qualityLevels[event.selectedIndex];
+                var button = document.getElementById('quality-level-' + selected.id);
+                button.classList.add('selected');
+              })
+            });
+          }
+
+          (function(window, videojs) {
+            createPlayer(setup);
+          })(window, window.videojs);
+          </script>
+        </center>
+        <br>
         <p>
+          To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks(.ts files) that are downloaded and the different qualities of these chunks.
+          <p>
+            <br>
+            <center>
+              <img width=100% src="http://127.0.0.1/static/img/packet.png" >
+            </center>
+          </p>
+          <br>
+          <h3>Live</h3>
           <br>
           <center>
-            <img width=100% src="http://127.0.0.1/static/img/packet.png" >
+            <video style="max-width:100%; max-height:100%" id=example-video2 class="video-js vjs-default-skin" controls>
+              <source
+              src="http://127.0.0.1/static/video/live/stream.m3u8"
+              type="application/x-mpegURL">
+            </video>
           </center>
-        </p>
-        <br>
-        <h3>Live</h3>
-        <br>
-        <center>
-          <video style="max-width:100%; max-height:100%" id=example-video2 class="video-js vjs-default-skin" controls>
-            <source
-            src="http://127.0.0.1/static/video/live/stream.m3u8"
-            type="application/x-mpegURL">
-          </video>
-        </center>
-        <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
-        <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
-        <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
-        <script>
-        var player2 = videojs('example-video2');
-        player2.play();
+          <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
+          <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+          <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
+          <script>
+          var player2 = videojs('example-video2');
+          player2.play();
+          </script>
         </script>
-      </script>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      <br>
-      <h2>HowTo</h2>
-      <br>
-    </div>
-    <div class="card-body">
-      <br>
-      <p class="alinea">
-        This document aims to deploy a website. The purpose of the website is to host the description of the protocol Http Live Streaming (HLS).
-        Besides, the website implements this protocol and a demonstration of a video received thanks to the HLS protocol.
-        In the rest of the document, all lines starting with “$” mean that the lines need to be written in a terminal.
-      </p>
-      <br>
-      <h3>0. Prerequisites</h3>
-      <br>
-      <p>
-        <ul>
-          <li><a href="https://github.com/VideoStreamingEnseirb/HLS/">Our github link</a></li>
-          <li>Ubuntu 18.04</li>
-          <li>Install docker : <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Follow this tutorial</a> from the part “Install using the repository”</li>
-          <li>Install docker-compose : <a href="https://docs.docker.com/compose/install/"> Follow this tutorial </a> 	and follow the part for Linux users</li>
-          <li>ffmpeg : run the following commands :
-            <br>
-            <code>$ sudo apt-get update </code>
-            <br>
-            <code>$ sudo apt-get install ffmpeg</code>
-          </li>
-        </ul>
-      </p>
-      <br>
-      <h3>1. Deployment </h3>
-      <br>
-      <p>
-        <ul>
-          <li>Download the zip or clone the github from our <a href="https://github.com/VideoStreamingEnseirb/HLS/">github link</a>.</li>
-          <br>
-          <li>Go to the directory application :</li>
-          <br>
-          <code>$ cd HLS/HLSproject</code>
-          <br>
-          <code>$ sudo docker-compose build</code>
-          <br>
-          <code>$ sudo docker-compose up -d</code>
-          <br>
-
-          <br>
-          <li>To verify whether this step works you can try to reach <i>http://127.0.0.1/HLS</i> and see whether the page is displayed or not.</li>
-        </ul>
-        <br>
-        <h3>2.Manifest generation</h3>
-        <br>
-        <p>
-          To use HLS, the application needs to have access to the manifest generated from a video. You can find a sample video <a href="https://standaloneinstaller.com/blog/big-list-of-sample-videos-for-testers-124.html">here</a> .
-        </p>
-        <br>
-        <h4>From a local video :</h4>
-        <br>
-        <p>
-          <ul><li>Go to the generate_manifest directory:</li>
-            <br>
-            <code>  $ cd ../generate_manifest</code>
-            <br>
-            <code>  $ rm -rf ../HLSproject/HLS/static/video/vid/*</code>
-            <br>
-            <code>  $ chmod +x create-vod-hls.sh</code>
-            <br>
-            <code>  $ ./create-vod-hls.sh path_to_your_video ../HLSproject/HLS/static/video/vid/</code>
-            <br>
-          </ul>
-        </p>
-        <br>
-
-
-        <h4>From the camera live streaming :</h4>
-        <br>
-        <p>
-          This part will generate a manifest from the video camera.
-          <ul>  <li>Go to the generate_manifest directory :</li>
-            <br>
-            <code>  $ cd generate_manifest</code>
-            <br>
-            <code>  $ chmod +x live.sh</code>
-            <br>
-            <code>  $ mkdir ../HLSproject/HLS/static/video/live</code>
-            <br>
-            <code>  $ ./live.sh </code>
-            <br>
-          </ul>
-        </p>
-        <br>
-        <h3>3. Demonstration </h3>
-        <br>
-        <p>
-          If you have follow this HowTo step by step, everything should be working. You can know go to the <i>http://127.0.0.1/HLS</i>.
-          <br>
-          To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks (.ts files) that are downloaded and the different qualities of these chunks.
-        </p>
-        <br>
-
       </div>
     </div>
-  </div>
-</body>
+    <div class="card">
+      <div class="card-header">
+        <br>
+        <h2>HowTo</h2>
+        <br>
+      </div>
+      <div class="card-body">
+        <br>
+        <p class="alinea">
+          This document aims to deploy a website. The purpose of the website is to host the description of the protocol Http Live Streaming (HLS).
+          Besides, the website implements this protocol and a demonstration of a video received thanks to the HLS protocol.
+          In the rest of the document, all lines starting with “$” mean that the lines need to be written in a terminal.
+        </p>
+        <br>
+        <h3>0. Prerequisites</h3>
+        <br>
+        <p>
+          <ul>
+            <li><a href="https://github.com/VideoStreamingEnseirb/HLS/">Our github link</a></li>
+            <li>Ubuntu 18.04</li>
+            <li>Install docker : <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Follow this tutorial</a> from the part “Install using the repository”</li>
+            <li>Install docker-compose : <a href="https://docs.docker.com/compose/install/"> Follow this tutorial </a> 	and follow the part for Linux users</li>
+            <li>ffmpeg : run the following commands :
+              <br>
+              <code>$ sudo apt-get update </code>
+              <br>
+              <code>$ sudo apt-get install ffmpeg</code>
+            </li>
+          </ul>
+        </p>
+        <br>
+        <h3>1. Deployment </h3>
+        <br>
+        <p>
+          <ul>
+            <li>Download the zip or clone the github from our <a href="https://github.com/VideoStreamingEnseirb/HLS/">github link</a>.</li>
+            <br>
+            <li>Go to the directory application :</li>
+            <br>
+            <code>$ cd HLS/HLSproject</code>
+            <br>
+            <code>$ sudo docker-compose build</code>
+            <br>
+            <code>$ sudo docker-compose up -d</code>
+            <br>
 
-</html>
+            <br>
+            <li>To verify whether this step works you can try to reach <i>http://127.0.0.1/HLS</i> and see whether the page is displayed or not.</li>
+          </ul>
+          <br>
+          <h3>2.Manifest generation</h3>
+          <br>
+          <p>
+            To use HLS, the application needs to have access to the manifest generated from a video. You can find a sample video <a href="https://standaloneinstaller.com/blog/big-list-of-sample-videos-for-testers-124.html">here</a> .
+          </p>
+          <br>
+          <h4>From a local video :</h4>
+          <br>
+          <p>
+            <ul><li>Go to the generate_manifest directory:</li>
+              <br>
+              <code>  $ cd ../generate_manifest</code>
+              <br>
+              <code>  $ rm -rf ../HLSproject/HLS/static/video/vid/*</code>
+              <br>
+              <code>  $ chmod +x create-vod-hls.sh</code>
+              <br>
+              <code>  $ ./create-vod-hls.sh path_to_your_video ../HLSproject/HLS/static/video/vid/</code>
+              <br>
+            </ul>
+          </p>
+          <br>
+
+
+          <h4>From the camera live streaming :</h4>
+          <br>
+          <p>
+            This part will generate a manifest from the video camera.
+            <ul>  <li>Go to the generate_manifest directory :</li>
+              <br>
+              <code>  $ cd generate_manifest</code>
+              <br>
+              <code>  $ chmod +x live.sh</code>
+              <br>
+              <code>  $ mkdir ../HLSproject/HLS/static/video/live</code>
+              <br>
+              <code>  $ ./live.sh </code>
+              <br>
+            </ul>
+          </p>
+          <br>
+          <h3>3. Demonstration </h3>
+          <br>
+          <p class="alinea">
+            If you have followed this HowTo step by step, everything should be working. You can know go to the <i>http://127.0.0.1/HLS</i>.
+            <br>
+            To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks (.ts files) that are downloaded and the different qualities of these chunks.
+          </p>
+          <br>
+
+        </div>
+        <br>
+
+        <div class="card">
+          <div class="card-header">
+            <h3> Bibliography </h3>
+          </div>
+          <div class="card-body">
+            <ol>
+                <li>apple.com : <a href="https://developer.apple.com/streaming/"><cite> HLS Official Website</cite></a></li>
+                <li>wikipedia.org : <a href="https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP"><cite>Adaptive Streaming over HTTP</cite></a></li>
+                <li>ietf.org : <a href="https://tools.ietf.org/html/rfc8216"><cite>RFC 8216 : HLS protocol</cite></a></li>
+                <li>videojs.com : <a href="https://videojs.com/"><cite>videojs Official Website</cite></a></li>
+                <li>docker.com : <a href="https://www.docker.com/"><cite>Docker Official Website</cite></a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+
+    </html>
