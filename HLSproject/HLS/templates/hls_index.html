@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
+
+  <title>Video Streamings Protocol</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-dark fixed-top">
+    <a class="navbar-brand" id="nav">RSC 2019/2020</a>
+    <form class="form-inline">
+      <a class="nav-item nav-link" href="#">HLS</a>
+      <a class="nav-item nav-link" href="#">MPEG-DASH</a>
+      <a class="nav-item nav-link" href="#">RTMP</a>
+      <a class="nav-item nav-link" href="#">RTSP+RTP</a>
+      <a class="nav-item nav-link" href="#">WebRTC</a>
+    </form>
+  </nav>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h2> Protocol Presentation </h2>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">HTTP Live Streaming</h3>
+        <br>
+        <h5><a href="https://developer.apple.com/streaming/">The Official	Website of HLS</a></h5>
+        <br>
+        <p class="alinea">
+          In the 2000s the majority of the Internet traffic was HTTP-based.
+            Video streaming is partly the root cause of its growth, since it has gained more and more shares of the Internet traffic and might reach 80% of the traffic before 2022.
+        </p>
+        <p class="alinea">
+          Protocols were developed to diffuse, standardize and facilitate the video traffic on Internet.
+           Originally, most of video protocols were proprietary and UDP-based.
+           Nevertheless, in 2007, technologies using HTTP-based adaptive streaming were elaborated.
+           One of the most popular protocols is Http Live Streaming (HLS) developed by Apple Inc since may 2009. The latter is an adaptive bitrate streaming protocol for video.
+           Adaptive bitrate is the ability
+          to
+           adjust the quality of the video stream in near real-time according the network quality and CPU capacity available on the client side. This feature is detailed thereafter.
+        </p>
+        <br>
+        <h4>Protocol stack</h4>
+        <p class="alinea">
+          HLS is an HTTP-based protocol. It works on TCP/IP protocols like all HTTP traffic (Figure 1). HLS is an Over-the-top solution working on the already existing and vastly
+               deployed, the HTTP protocol. That makes HLS straightforward to implement and set up.
+        </p>
+
+        <p>
+          <center>
+            <img alt="HLS protocol stack" class="responsive" src="http://127.0.0.1/static/img/ProtocolStack.png" >
+            <figcaption>Figure 1 : HLS protocol stack</figcaption>
+          </center>
+        </p>
+        <br>
+        <h4>HTTP Live Streaming Overview</h4>
+        <br>
+        <h5>HLS : Manifest</h5>
+        <center>
+          <p>
+            <img  width=60%  src="http://127.0.0.1/static/img/Server.png" >
+            <figcaption>Figure 2 : HLS, Manifest organization</figcaption>
+          </p>
+        </center>
+        <br>
+        <p class="alinea">
+          First of all, server side, the input video is encoded in MPEG-2 TS file. Then, the video is segmented into different files (.ts) of equal length
+          (8 seconds) for several bitrate versions (Figure 2). An index file (.m3u8) called Manifest is also generated in order to reference the fragmented files.
+          The manifest and the media playlist contain the location (URL) of all the segments since they are often stored on several servers to ensure
+          the sturdiness of the stream. Besides, the Manifest file allows the client to know what video streams (different qualities) and segments are
+          available at a given time. By means of this protocol, it is possible for the user to switch from one bitrate version to another.
+        </p>
+        <h5>HLS : Client-Server Protocol</h5>
+        <br>
+        <center>
+          <p>
+            <img width=60%  src="http://127.0.0.1/static/img/CopyofSchema.png" >
+            <figcaption>Figure 3 : HLS, a Client-Server protocol</figcaption>
+          </p>
+        </center>
+        <br>
+        <p class="alinea">
+
+          The Manifest (.m3u8 file) of a given video is stored server side.
+          The different segments can be located in manifold Content Delivery Network (CDN). The latter is a group of servers that provide fast delivery internet content.
+          Indeed, media can be stored on different CDNs to ensure the redundancy and efficiency. The client can choose the closest CDN or the more relevant, thence guaranteeing.
+          that a CDN is not overloaded.
+        </p>
+        <p class="alinea">
+          To access a video client side is quite plain.
+          Firstly, the client makes a request to the server and downloads the Manifest file (Figure 3). Afterward, the device automatically chooses the appropriate stream quality in the Manifest
+          file according to its GPU capacities and the download bandwidth available. There is no standard explaining how HLS shall be handled client side but whichever video player is used the reasoning is similar. The video player can found the segments location for a given quality in the Manifest. Eventually, segments are downloaded and buffered. The video can be played while some segments are still not yet downloaded.
+        </p>
+
+        <br>
+        <h5>HLS : Adaptive Bitrate Protocol</h5>
+        <center>
+          <p>
+            <img width=60%  src="http://127.0.0.1/static/img/Client.png" alt="">
+            <figcaption>Figure 4 : HLS, Adaptive Bitrate example</figcaption>
+          </p>
+        </center>
+        <br>
+
+
+        <p class="alinea">
+          HLS protocol was defined as an adaptative bitrate protocol. The Figure 4 is the perfect example of how HLS adaptative bitrate works.
+          First, the client has a low Internet connection, therefore he downloads poor quality segments. Afterwards, the client bandwidth improves so as the video quality enhances from low to high. Finally, the video quality deteriorates because the bandwidth decreases.
+</p>
+<br>
+<h4>Advantages & Downsides</h4>
+<br>
+<p>
+          HLS is an HTTP-based protocol with a lot of advantages:
+          <br>
+
+          <ul>
+            <li>Low infrastructure cost</li>
+            <li>Adaptive bitrate</li>
+            <li>Straightforward to set up</li>
+            <li>Reliability</li>
+            <li>Widely supported by all client software (Android, Google Chrome, Safari, Linux, iOs, MacOS, Microsoft, ...)</li>
+
+          </ul>
+        <br>
+        But using HLS could lead to some limitations:
+        <br>
+        <br>
+        <ul>
+          <li>The latency due to the keyframe intervals, packet size and playback buffer requirement (minimum of 20 seconds of latency). </li>
+          <li>HLS only supports playing streams</li>
+        </ul>
+      </p>
+      <br>
+      <h4>Use Cases</h4>
+      <br>
+      <p>
+        Some big streaming platforms are using this protocol for their video live streams or their replay. For instance, Twitch, the first video games streaming
+        platform in the world makes use of HLS. HLS is also used by Canal + or Dailymotion. Moreover, Apple has developed an enhanced version of HLS : HLS Low Latency,
+        reaching a latency lesser than 2 seconds.
+      </p>
+      <br>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h2> Demonstration </h2>
+    </div>
+    <div class="card-body">
+      <h3> VOD </h3>
+      <br>
+      <center>
+        <video style="max-width:100%; max-height:100%" id=example-video  class="video-js vjs-default" controls>
+          <source
+          src="http://127.0.0.1/static/video/vid/playlist.m3u8"
+          type="application/x-mpegURL">
+        </video>
+      </center>
+      <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
+      <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+
+      <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
+      <script>
+      var player = videojs('example-video');
+      player.play();
+      </script>
+      <br>
+      <p>
+        To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks(.ts files) that are downloaded and the different qualities of these chunks.
+        <p>
+          <br>
+          <center>
+            <img width=100% src="http://127.0.0.1/static/img/packet.png" >
+          </center>
+        </p>
+        <br>
+        <h3>Live</h3>
+        <br>
+        <center>
+          <video style="max-width:100%; max-height:100%" id=example-video2 class="video-js vjs-default-skin" controls>
+            <source
+            src="http://127.0.0.1/static/video/live/stream.m3u8"
+            type="application/x-mpegURL">
+          </video>
+        </center>
+        <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+
+        <script src="http://127.0.0.1/static/js/videojs-contrib-hls.js"></script>
+        <script>
+        var player2 = videojs('example-video2');
+        player2.play();
+        </script>
+      </script>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <br>
+      <h2>HowTo</h2>
+      <br>
+    </div>
+    <div class="card-body">
+      <br>
+      <p>
+        This document aims to deploy a website. The purpose of the website is to host the description of the protocol Http Live Streaming (HLS).
+         Besides, the website implements this protocol and a demonstration of a video received thanks to the HLS protocol.
+        In the rest of the document, all lines starting with “$” mean that the lines need to be written in a terminal.
+      </p>
+      <br>
+      <h3>0. Prerequisites</h3>
+      <br>
+      <p>
+        <ul>
+          <li><a href="https://github.com/VideoStreamingEnseirb/HLS/">Our github link</a></li>
+          <li>Ubuntu 18.04</li>
+          <li>Install docker : <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Follow this tutorial</a> from the part “Install using the repository”</li>
+          <li>Install docker-compose : <a href="https://docs.docker.com/compose/install/"> Follow this tutorial </a> 	and follow the part for Linux users</li>
+          <li>ffmpeg : run the following commands :
+            <br>
+            <code>$ sudo apt-get update </code>
+            <br>
+            <code>$ sudo apt-get install ffmpeg</code>
+          </li>
+        </ul>
+      </p>
+      <br>
+      <h3>1. Deployment </h3>
+      <br>
+      <p>
+        <ul>
+          <li>Download the zip or clone the github from our <a href="https://github.com/VideoStreamingEnseirb/HLS/">github link</a>.</li>
+          <br>
+          <li>Go to the directory application :</li>
+          <br>
+          <code>$ cd HLS/HLSproject</code>
+          <br>
+          <code>$ sudo docker-compose build</code>
+          <br>
+          <code>$ sudo docker-compose up -d</code>
+          <br>
+
+          <br>
+          <li>To verify whether this step works you can try to reach <i>http://127.0.0.1/HLS</i> and see whether the page is displayed or not.</li>
+        </ul>
+        <br>
+        <h3>2.Manifest generation</h3>
+        <br>
+        <p>
+          To use HLS, the application needs to have access to the manifest generated from a video. You can find a sample video <a href="https://standaloneinstaller.com/blog/big-list-of-sample-videos-for-testers-124.html">here</a> .
+        </p>
+        <br>
+        <h4>From a local video :</h4>
+        <br>
+        <p>
+          <ul><li>Go to the generate_manifest directory:</li>
+            <br>
+            <code>  $ cd ../generate_manifest</code>
+            <br>
+            <code>  $ rm -rf ../HLSproject/trombinoscop/static/video/vid/*</code>
+            <br>
+            <code>  $ chmod +x create-vod-hls.sh</code>
+            <br>
+            <code>  $ ./create-vod-hls.sh path_to_your_video ../HLSproject/trombinoscop/static/video/vid/</code>
+            <br>
+          </ul>
+        </p>
+        <br>
+
+
+        <h4>From the camera live streaming :</h4>
+        <br>
+        <p>
+          This part will generate a manifest from the video camera.
+          <ul>  <li>Go to the generate_manifest directory :</li>
+            <br>
+            <code>  $ cd generate_manifest</code>
+            <br>
+            <code>  $ chmod +x live.sh</code>
+            <br>
+            <code>  $ mkdir ../HLSproject/trombinoscop/static/video/live</code>
+            <br>
+            <code>  $ ./live.sh </code>
+            <br>
+          </ul>
+        </p>
+        <br>
+        <h3>3. Demonstration </h3>
+        <br>
+        <p>
+          If you have follow this HowTo step by step, everything should be working. You can know go to the <i>http://127.0.0.1/HLS</i>.
+<br>
+          To see the HLS packets, you can type on the F12 keyboard key and then click on the network tab. An example is shown on the below figure, you can see the chunks (.ts files) that are downloaded and the different qualities of these chunks.
+        </p>
+        <br>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
